@@ -33,7 +33,6 @@
 
             $userDao = new UserDAO();
             $user = $userDao->findOneByEmail($email);
-            var_dump($user);
             if(!$user){
                 throw new \Exception("Email Invalido", 401);
             }
