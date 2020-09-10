@@ -4,8 +4,12 @@
 
     use App\Model\DAO\BaseDAO;
 
-    class UserDAO extends BaseDAO {
 
+
+    class UserDAO extends BaseDAO {
+       
+        private $table = "user";
+        private $userClass = "App\Model\User";
         public function save($user){
           $hashPassword = password_hash($user->password , PASSWORD_BCRYPT);
             if(!$hashPassword)return false;
@@ -19,8 +23,18 @@
                 "birthday" => $user->birthday,
                 "bio" => $user->bio
                 );
-            return $this->insert("user",$columns,$values);
-        }     
+            return $this->insert($this->table,$columns,$values);
+        } 
+        
+        public function findOneByEmail($email){
+            $columns = "id,fistName,lastName,email,password,birthday,bio";
+            return $this->findOneBy($this->table,$columns,"email",$email);
+        }
+
+        public function findOneById($id){
+            $columns = "id,fistName,lastName,email,password,birthday,bio";
+            return $this->findOneBy($this->table,$columns,"id",$id);
+        }
 
 
 
