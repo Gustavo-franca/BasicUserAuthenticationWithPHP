@@ -26,6 +26,27 @@
             //show register view
         }
 
+        public function validate($request){
+
+            $email = $request["email"];
+            $password = $request["password"];
+
+            $userDao = new UserDAO();
+            $user = $userDao->findOneByEmail($email);
+            var_dump($user);
+            if(!$user){
+                throw new \Exception("Email Invalido", 401);
+            }
+
+            if(!(password_verify($password,$user->password))){
+                throw new \Exception("Senha Invalida", 401);
+            }
+
+            var_dump("$user->fistName LOGADO COM SUCESSO!");
+
+
+        }
+
 
     }
 
