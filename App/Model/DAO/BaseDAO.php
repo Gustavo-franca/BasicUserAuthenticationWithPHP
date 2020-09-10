@@ -3,7 +3,7 @@
     namespace App\Model\DAO;
 
     use App\Database\Connection;
-
+    use PDO;
     class BaseDAO {
 
         private $connection;
@@ -19,6 +19,22 @@
         {
             return $this->connection->query($sql);
         }
+    }
+
+    public function findOneBy($table,$columns,$column,$value){
+        if(!empty($table) && !empty($value) && !empty($columns))
+        {
+            $param   = ":".$column;
+
+            $stmt = $this->connection->prepare("SELECT $columns FROM $table WHERE $column = $param LIMIT 1");
+            $stmt->execute(array("$param" => $value));
+     
+            return $stmt->fetchAll(\PDO::FETCH_OBJ)[0];   
+        }else{
+            return false;
+        }
+
+
     }
 
     public function insert($table, $cols, $values)
