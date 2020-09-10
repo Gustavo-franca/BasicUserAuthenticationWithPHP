@@ -23,8 +23,6 @@
                 }
                 return $connection;
             } catch (PDOException $e) {
-                var_dump(DB_DRIVER);
-                var_dump($e);
                 throw new Exception("Erro de conexão com o banco de dados",500);
             }
         }

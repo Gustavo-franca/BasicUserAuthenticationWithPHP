@@ -4,6 +4,7 @@
 
     use App\Controller\UserController;
     use App\Router;
+    use App\Config\Index;
 
     class App {
 
@@ -11,12 +12,13 @@
 
         public function __construct($URI,$method){
             $this->router = new Router($URI,$method);
-
-            define("DB_DRIVER","mysql");
-            define("DB_HOST","localhost");
-            define("DB_NAME","userAuth");
-            define("DB_USER","root");
-            define("DB_PASSWORD","Sa1amander");
+            $json = file_get_contents('App/Config/index.json');
+            $Authentication = json_decode($json);
+            define("DB_DRIVER",$Authentication->DB_DRIVER);
+            define("DB_HOST",$Authentication->DB_HOST);
+            define("DB_NAME",$Authentication->DB_NAME);
+            define("DB_USER",$Authentication->DB_USER);
+            define("DB_PASSWORD",$Authentication->DB_PASSWORD);
         }
 
         public function run(){
