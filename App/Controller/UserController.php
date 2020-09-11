@@ -2,10 +2,13 @@
 
     namespace App\Controller;
 
+    use App\Controller\BaseController;
+
     use App\Model\User\User;
     use App\Model\User\UserDAO;
+    use Exception;
 
-    class UserController {
+    class UserController extends BaseController {
 
         function create($request){
             $user = new User();
@@ -17,9 +20,12 @@
             $user->bio = $request["bio"];
 
             $userDao = new UserDAO();
-            $userDao->save($user);
+            if($userDao->save($user)){
+               return  $this->render("/register/success",get_object_vars($user));
 
-            var_dump("parabéns você foi Cadastrado Com Sucesso!");
+            }
+
+           return  $this->render("register/index",get_object_vars($user));
         }
         
         function update($request){
@@ -28,7 +34,6 @@
             $user->id = $request["id"];
             $user->fistName = $request["fistName"];
             $user->lastName = $request["lastName"];
-            $user->email = $request["email"];
             $user->birthday = date($request["birthday"]);
             $user->bio = $request["bio"];
 
@@ -38,28 +43,51 @@
             var_dump("Seus Dados foram atualizados!");
         }
 
-        function register(){
-            //show register view
-        }
+       
 
         public function validate($request){
+            try{
+                $email = $request["email"];
+                $password = $request["password"];
 
-            $email = $request["email"];
-            $password = $request["password"];
+                $userDao = new UserDAO();
+                $user = $userDao->findOneByEmail($email);
+                if(!$user){
+                    throw new \Exception("Email Invalido", 401);
+                }
 
-            $userDao = new UserDAO();
-            $user = $userDao->findOneByEmail($email);
-            if(!$user){
-                throw new \Exception("Email Invalido", 401);
+                if(!(password_verify($password,$user->password))){
+                    throw new \Exception("Senha Invalida", 401);
+                }
+                unset($user->password);
+                $_SESSION["user"] = $user;
+               
+                $this->redirect("/profile");
+
+            }catch(\Exception $err){
+                return $this->render("login/index",
+                ["message" => $err->getMessage(),
+                "email"=> $email,
+                "password" => $password]);
             }
 
-            if(!(password_verify($password,$user->password))){
-                throw new \Exception("Senha Invalida", 401);
+        }
+        
+
+        function register(){
+            $this->render("register/index");
+        }
+        
+        public function login(){
+            return $this->render("login/index");
+        }
+       
+        public function profile(){
+            $user = $_SESSION["user"];
+            if(isset($user)){
+                return $this->render("profile/index",get_object_vars($user));
             }
-
-            var_dump("$user->fistName LOGADO COM SUCESSO!");
-
-
+            return $this->render("error/403");
         }
 
 
