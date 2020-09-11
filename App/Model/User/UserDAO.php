@@ -3,6 +3,7 @@
     namespace App\Model\User;
 
     use App\Model\DAO\BaseDAO;
+    use Exception;
 
 
 
@@ -12,7 +13,7 @@
         private $userClass = "App\Model\User";
         public function save($user){
             if(!($this->findOneByEmail($user->email))){
-                throw new Exception("Email já registrado");
+                throw new \Exception("Email já registrado");
             }
           $hashPassword = password_hash($user->password , PASSWORD_BCRYPT);
             if(!$hashPassword)return false;

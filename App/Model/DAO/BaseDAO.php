@@ -55,6 +55,7 @@
 
     public function update($table, $cols, $values, $where=null)
     {
+        
         if(!empty($table) && !empty($cols) && !empty($values))
         {
             $columns = explode(',',$cols);
