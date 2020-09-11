@@ -56,7 +56,8 @@
             $userDao = new UserDAO();
             $userDao->update($user);
 
-            var_dump("Seus Dados foram atualizados!");
+            $_SESSION["message"]= "Seus Dados Foram Atualizados Com Sucesso!";
+             $this->redirect("/profile");
         }catch(\Exception $err){
             $response = [];
             $response["message"] = $err->getMessage();
@@ -111,8 +112,11 @@
        
         public function profile(){
             $user = $_SESSION["user"];
+            $message = $_SESSION["message"];
+            unset($_SESSION["message"]);
             if(isset($user)){
-                return $this->render("profile/index",get_object_vars($user));
+                return $this->render("profile/index",array_merge(["message" => $message],get_object_vars($user)));
+             
             }
             return $this->render("error/403");
         }
