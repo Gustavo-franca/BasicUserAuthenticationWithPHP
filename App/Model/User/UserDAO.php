@@ -11,6 +11,9 @@
         private $table = "user";
         private $userClass = "App\Model\User";
         public function save($user){
+            if(!($this->findOneByEmail($user->email))){
+                throw new Exception("Email já registrado");
+            }
           $hashPassword = password_hash($user->password , PASSWORD_BCRYPT);
             if(!$hashPassword)return false;
             $columns = ":fistName,:lastName,:email,:password,:birthday,:bio";  
@@ -29,7 +32,6 @@
               $values = array(
                   "fistName" => $user->fistName,
                   "lastName" => $user->lastName,
-                  "email" => $user->email,
                   "birthday" => $user->birthday,
                   "bio" => $user->bio,
                   "id" =>$user->id
