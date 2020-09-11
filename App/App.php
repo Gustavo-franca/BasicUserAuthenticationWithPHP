@@ -14,11 +14,15 @@
             $this->router = new Router($URI,$method);
             $json = file_get_contents('App/Config/index.json');
             $Authentication = json_decode($json);
+           
             define("DB_DRIVER",$Authentication->DB_DRIVER);
             define("DB_HOST",$Authentication->DB_HOST);
             define("DB_NAME",$Authentication->DB_NAME);
             define("DB_USER",$Authentication->DB_USER);
             define("DB_PASSWORD",$Authentication->DB_PASSWORD);
+            define('PATH'       ,realpath("./"));
+            define('TITLE'          ,"AuthUser");
+            define('APP_HOST'       ,"http://".$_SERVER['HTTP_HOST']);
         }
 
         public function run(){
