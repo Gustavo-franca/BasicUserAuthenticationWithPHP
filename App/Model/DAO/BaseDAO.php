@@ -57,12 +57,21 @@
     {
         if(!empty($table) && !empty($cols) && !empty($values))
         {
+            $columns = explode(',',$cols);
+            $setColumns = "";
+            foreach ($columns as $column) {
+                $setColumns .= "$column = :$column,";
+            }
+            $setColumns = trim($setColumns,',');
+
+
+
             if($where)
             {
                 $where = " WHERE $where ";
             }
 
-            $stmt = $this->connection->prepare("UPDATE $table SET $cols $where");
+            $stmt = $this->connection->prepare("UPDATE $table SET $setColumns $where");
             $stmt->execute($values);
 
             return $stmt->rowCount();
