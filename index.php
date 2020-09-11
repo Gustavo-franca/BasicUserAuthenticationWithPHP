@@ -5,6 +5,8 @@
 
     require_once("vendor/autoload.php"); 
 
+    session_start();
+
     $URI = $_SERVER["REQUEST_URI"];
     $method = $_SERVER["REQUEST_METHOD"];
 
