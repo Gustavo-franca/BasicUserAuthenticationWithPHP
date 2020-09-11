@@ -19,7 +19,23 @@
             $userDao = new UserDAO();
             $userDao->save($user);
 
-            var_dump($user);
+            var_dump("parabéns você foi Cadastrado Com Sucesso!");
+        }
+        
+        function update($request){
+            $user = new User();
+          
+            $user->id = $request["id"];
+            $user->fistName = $request["fistName"];
+            $user->lastName = $request["lastName"];
+            $user->email = $request["email"];
+            $user->birthday = date($request["birthday"]);
+            $user->bio = $request["bio"];
+
+            $userDao = new UserDAO();
+            $userDao->update($user);
+
+            var_dump("Seus Dados foram atualizados!");
         }
 
         function register(){
