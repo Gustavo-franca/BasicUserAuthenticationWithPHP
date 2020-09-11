@@ -13,9 +13,8 @@
         public function save($user){
           $hashPassword = password_hash($user->password , PASSWORD_BCRYPT);
             if(!$hashPassword)return false;
-            $columns = ":id,:fistName,:lastName,:email,:password,:birthday,:bio";  
+            $columns = ":fistName,:lastName,:email,:password,:birthday,:bio";  
             $values = array(
-                "id" => $user->id,
                 "fistName" => $user->fistName,
                 "lastName" => $user->lastName,
                 "email" => $user->email,
@@ -25,6 +24,20 @@
                 );
             return $this->insert($this->table,$columns,$values);
         } 
+        public function update($user){
+              $columns = "fistName,lastName,email,birthday,bio";  
+              $values = array(
+                  "fistName" => $user->fistName,
+                  "lastName" => $user->lastName,
+                  "email" => $user->email,
+                  "birthday" => $user->birthday,
+                  "bio" => $user->bio,
+                  "id" =>$user->id
+                  );
+
+                $where = "id = :id";
+              return parent::update($this->table,$columns,$values,$where);
+          } 
         
         public function findOneByEmail($email){
             $columns = "id,fistName,lastName,email,password,birthday,bio";
