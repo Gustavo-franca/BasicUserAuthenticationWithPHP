@@ -7,12 +7,12 @@
         private $method;
 
         public function __construct($URI,$method){
-            $this->uri = $URI;
+            $this->uri = trim($URI,'/');
             $this->method = $method;
         }
 
         public function get($route,$callback) {
-            if($this->uri == $route && $this->method == "GET"){
+            if($this->uri == trim($route,'/') && $this->method == "GET"){
                 $data = $this->getData();
                 call_user_func($callback,$data);
                 die();
@@ -20,7 +20,7 @@
         }
 
         public  function post($route,$callback) {
-            if($this->uri == $route && $this->method == "POST"){
+            if($this->uri == trim($route,'/') && $this->method == "POST"){
                
                 $data = $this->getData();
                 call_user_func($callback,$data);
