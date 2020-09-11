@@ -1,5 +1,9 @@
 
 <form action="" method="POST">
+        <div class="success">
+            <?php echo $viewVar["message"]?>
+        </div>
+
         <div class="input-group">
             <label for="iFistName"
               >
