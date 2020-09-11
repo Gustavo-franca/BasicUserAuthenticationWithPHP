@@ -1,3 +1,5 @@
+
 App/Config/*
 
 !App/Config/.gitkeep
+.vscode
