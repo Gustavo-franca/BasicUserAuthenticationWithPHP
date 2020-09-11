@@ -31,8 +31,10 @@
             $this->router->get('/user',[$userController,'register']);
             $this->router->post('/user',[$userController,'create']);
 
-            $this->router->get('/user/profile',[$userController,'profile']);
-            $this->router->post('/user/profile',[$userController,'update']);
+            $this->router->get('/profile',[$userController,'profile']);
+            $this->router->post('/profile',[$userController,'update']);
+
+            http_response_code(400);
 
         }
 
