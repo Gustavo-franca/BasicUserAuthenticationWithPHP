@@ -12,7 +12,7 @@
         private $table = "user";
         private $userClass = "App\Model\User";
         public function save($user){
-            if(!($this->findOneByEmail($user->email))){
+            if($this->findOneByEmail($user->email)){
                 throw new \Exception("Email já registrado");
             }
           $hashPassword = password_hash($user->password , PASSWORD_BCRYPT);
@@ -29,7 +29,7 @@
             return $this->insert($this->table,$columns,$values);
         } 
         public function update($user){
-              $columns = "fistName,lastName,email,birthday,bio";  
+              $columns = "fistName,lastName,birthday,bio";  
               $values = array(
                   "fistName" => $user->fistName,
                   "lastName" => $user->lastName,
