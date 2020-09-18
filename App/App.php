@@ -3,6 +3,7 @@
     namespace App;
 
     use App\Controller\UserController;
+    use App\Controller\BaseController;
     use App\Router;
     use App\Config\Index;
 
@@ -26,6 +27,7 @@
         }
 
         public function run(){
+            $baseController = new BaseController();
 
             $userController = new UserController();
             $this->router->get('/',function (){
@@ -42,6 +44,7 @@
             $this->router->post('profile',[$userController,'update']);
 
             http_response_code(400);
+            $baseController->render("error/404");
 
         }
 
