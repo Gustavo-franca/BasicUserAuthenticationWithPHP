@@ -95,8 +95,8 @@
             }catch(\Exception $err){
                 return $this->render("login/index",
                 ["message" => $err->getMessage(),
-                "email"=> $email,
-                "password" => $password]);
+                "email"=>  $request["email"],
+                "password" =>$request["password"]]);
             }
 
         }
