@@ -28,15 +28,18 @@
         public function run(){
 
             $userController = new UserController();
-
-            $this->router->get('/user/login',[$userController,'login']);
-            $this->router->post('/user/login',[$userController,'validate']);
+            $this->router->get('/',function (){
+                header('Location : '. APP_HOST .'/user/login',true,301);
+                die();
+            });
+            $this->router->get('user/login',[$userController,'login']);
+            $this->router->post('user/login',[$userController,'validate']);
             
-            $this->router->get('/user',[$userController,'register']);
-            $this->router->post('/user',[$userController,'create']);
+            $this->router->get('user',[$userController,'register']);
+            $this->router->post('user',[$userController,'create']);
 
-            $this->router->get('/profile',[$userController,'profile']);
-            $this->router->post('/profile',[$userController,'update']);
+            $this->router->get('profile',[$userController,'profile']);
+            $this->router->post('profile',[$userController,'update']);
 
             http_response_code(400);
 
