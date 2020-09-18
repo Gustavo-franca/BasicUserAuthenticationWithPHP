@@ -6,7 +6,7 @@
 
     class UserValidate extends Validate{
         private function fistName($name){
-            $this->validate("fistName",$name);
+            $this->validate("Nome",$name);
             $this->required();
             $this->isString();
             $this->min(3);
@@ -14,7 +14,7 @@
 
         }
         private function lastName($name){
-            $this->validate("fistName",$name);
+            $this->validate("Sobrenome",$name);
             $this->required();
             $this->isString();
             $this->min(3);
@@ -37,13 +37,13 @@
             $this->validate(null,null);
         }
         private function validateBio($bio){
-            $this->validate("bio",$bio);
+            $this->validate("biografia",$bio);
             $this->isString();
             $this->max(500);
             $this->validate(null,null);
         }
         private function validateDate($date){
-            $this->validate("date",$date);
+            $this->validate("Data de Nascimento",$date);
             $this->required();
             $this->isString();
             $this->date();
@@ -53,8 +53,11 @@
         function login($request){
 
             $this->validateEmail($request["email"]);
-
-            $this->password($request["password"]);
+            try{
+                $this->password($request["password"]);
+            }catch(\Exception $err){
+                throw new \Exception('Senha invalida');
+            }
             return true;
         }
         function update($request){
