@@ -42,6 +42,10 @@
         }
         
         function update($request){
+            $user = $_SESSION["user"];
+            if(!$user){
+                return $this->render("error/403");
+            }
             $userValidate = new UserValidate();
             try{
                 $userValidate->update($request);
@@ -57,14 +61,12 @@
             $userDao->update($user);
 
             $_SESSION["message"]= "Seus Dados Foram Atualizados Com Sucesso!";
-             $this->redirect("/profile");
+            return $this->redirect('/profile');
         }catch(\Exception $err){
-            $response = [];
-            $response["message"] = $err->getMessage();
-            $response = array_merge($response,$request);
-            return $this->render("register/index",
-            $response);
-          }
+            $_SESSION["message"] = $err->getMessage();
+            return $this->redirect('/profile');
+    
+        }
 
         }
 
