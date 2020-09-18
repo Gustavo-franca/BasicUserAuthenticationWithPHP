@@ -119,6 +119,7 @@
                 <label 
                 for="iEmail">Email</label>
                 <input
+                required
                     type="text"
                     id="iEmail"
                     name="email"
@@ -130,6 +131,7 @@
             <div class="input-group">
                 <label for="iPassword">Senha</label>
                 <input 
+                required
                 type="password"
                 id="iPassword"
                 name="password"
@@ -154,8 +156,19 @@
     inputs.forEach((input)=>{
         input.addEventListener('blur',handleBlurInput);
         input.addEventListener('focus',handleFocusInput);
+        handleInitialFocusInput(input);
     })
 
+    function handleInitialFocusInput(input){
+        if(input.value.length > 0){   
+        target = document.querySelector('#' + input.id);
+        const inputGroup = target.closest('.input-group');
+        const label = inputGroup.querySelector('label');
+        label.classList.remove('in-focus');
+        label.classList.add('in-focus');
+        }
+
+    }
     function handleFocusInput(event){
         const {target} = event;
         const inputGroup = target.closest('.input-group');
@@ -174,4 +187,6 @@
         }
         label.classList.remove('in-focus');
     }
+
+
 </script>  
