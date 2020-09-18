@@ -4,50 +4,50 @@
     use App\Lib\Validate;
     use Exception;
 
-    class UserValidate extends Validate{
+    class UserValidate {
         private function fistName($name){
-            $this->validate("Nome",$name);
-            $this->required();
-            $this->isString();
-            $this->min(3);
-            $this->validate(null,null);
+            Validate::validate("Nome",$name)
+            ->required()
+            ->isString()
+            ->min(3);
+  
 
         }
         private function lastName($name){
-            $this->validate("Sobrenome",$name);
-            $this->required();
-            $this->isString();
-            $this->min(3);
-            $this->validate(null,null);
+             Validate::validate("Sobrenome",$name)
+            ->required()
+            ->isString()
+            ->min(3);
+       
 
         }
         private function validateEmail($email){
-            $this->validate("email",$email);
-            $this->required();
-            $this->isString();
-            $this->email();
-            $this->validate(null,null);
+             Validate::validate("email",$email)
+            ->required()
+            ->isString()
+            ->email();
+   
         }
 
         private function password($password){
-            $this->validate("password",$password);
-            $this->required();
-            $this->isString();
-            $this->min(8);
-            $this->validate(null,null);
+             Validate::validate("password",$password)
+            ->required()
+            ->isString()
+            ->min(8);
+      
         }
         private function validateBio($bio){
-            $this->validate("biografia",$bio);
-            $this->isString();
-            $this->max(500);
-            $this->validate(null,null);
+             Validate::validate("biografia",$bio)
+            ->isString()
+            ->max(500);
+    
         }
         private function validateDate($date){
-            $this->validate("Data de Nascimento",$date);
-            $this->required();
-            $this->isString();
-            $this->date();
-            $this->validate(null,null);
+             Validate::validate("Data de Nascimento",$date)
+            ->required()
+            ->isString()
+            ->date();
+       
         }
 
         function login($request){
