@@ -2,43 +2,44 @@
 
     namespace App\Lib;
 
-
     use Exception;
     use DateTime;
     class Validate {
         private $fieldName;
         private $value;
 
-
-        protected function validate($fieldName,$value){
+        private function __construct($fieldName,$value){
             $this->fieldName = $fieldName;
             $this->value = $value;
         }
+
+        public static function validate($fieldName,$value){
+            return new validate($fieldName,$value);
+        }
         
 
-        protected function required(){
-       
+        public function required(){
             if(empty($this->value)){
-                $fieldName = $this->fieldName;
+               
                 throw new \Exception("O campo $fieldName é obrigatório!");
             }
-            return;
+            return $this;
         }
    
-        protected function isString(){
+        public function isString(){
             if(isset($this->value)){
                 if(!(gettype($this->value) == "string")){
                     $fieldName = $this->fieldName;
                     throw new \Exception("O campo $fieldName deve ser uma string!");
                 };
             }
-            return true;
+            return $this;
         }
 
-        protected function min($min){
+        public function min($min){
             if(!isset($this->value)){
                
-                return false;
+                return $this;
             }
             if($this->isString()){
                 if(!(strlen(trim($this->value)) >= $min)){
@@ -46,12 +47,12 @@
                     throw new \Exception("O campo $fieldName deve possuir mais que $min caracteres!");
                 };
             }
-            return false;
+            return $this;
         }
 
-        protected function max($max){
+        public function max($max){
             if(!isset($this->value)){
-                return false;
+                return $this;
             }
             if($this->isString()){
                 if(!(strlen(trim($this->value)) <= $max)){
@@ -60,12 +61,12 @@
                     throw new \Exception("O campo $fieldName deve possuir menos que $max caracteres!");
                 };
             }
-            return false;
+            return $this;
         }
 
-        protected function email(){
+        public function email(){
             if(!isset($this->value)){
-                return;
+                return $this;
             }
             if($this->isString()){
                  if(!filter_var($this->value, FILTER_VALIDATE_EMAIL)){
@@ -74,13 +75,12 @@
                  };
             
             }
-            return false;
+            return $this;
         }
-        protected function date(){
+        public function date(){
             if(!isset($this->value)){
-                return;
+                return $this;
             }
-            var_dump($this->value);
             try {
                 $dateTimeObject = new DateTime($this->value);
             } catch (\Exception $exc) {   
@@ -88,7 +88,7 @@
                     throw new \Exception("O campo $fieldName deve receber uma data Válida!");
 
             }
-            return true;
+            return $this;
         }
     }
 
