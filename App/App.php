@@ -43,6 +43,8 @@
             $this->router->get('profile',[$userController,'profile']);
             $this->router->post('profile',[$userController,'update']);
 
+            $this->router->post('user/exit',[$userController,'exit']);
+
             http_response_code(400);
             $baseController->render("error/404");
 
