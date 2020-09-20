@@ -161,14 +161,61 @@ input[type="date"]:focus {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
 }
+
+.exit{
+    
+    position:absolute;
+    right: 10px;
+    top: 10px;
+    
+    display: flex;
+    flex-direction: row;
+    justify-items:center;
+    align-items:center;
+     
+     
+
+    height: 25px;
+    width: 70px;
+
+    padding: 0px;
+    
+
+  
+    border-radius: 8px;
+
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+
+
+
+    box-shadow: 0;
+    border: 0;
+}
+.exit button{
+    width:100%;
+    height: 100%;
+    margin:0;
+    background: #262626;
+    text-align:center;  
+    margin: 0px;
+}
+.exit p span{
+
+
+}
 </style>
 <div class="profile">
+<form action="user/exit"  method="POST"class="exit">
+<button>Sair</button>
+ </form>
+
     <form action="" method="POST">
         <h1>Meu Perfil</h1>
             <div class="success">
                 <?php echo $viewVar["message"]?>
             </div>
-
             <div class="input-group">
                 <label for="iFistName"
                 >
