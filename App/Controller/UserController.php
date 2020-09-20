@@ -49,18 +49,20 @@
             $userValidate = new UserValidate();
             try{
                 $userValidate->update($request);
-            $user = new User();
           
-            $user->id = $request["id"];
             $user->fistName = $request["fistName"];
             $user->lastName = $request["lastName"];
             $user->birthday = date($request["birthday"]);
             $user->bio = $request["bio"];
 
             $userDao = new UserDAO();
-            $userDao->update($user);
-
+            $user = $userDao->update($user);
+            if(!$user){
+                throw new \Exception('Falha ao atualizar os Dados');
+             }
             $_SESSION["message"]= "Seus Dados Foram Atualizados Com Sucesso!";
+            unset($user->password);
+            $_SESSION["user"] = $user;
             return $this->redirect('/profile');
         }catch(\Exception $err){
             $_SESSION["message"] = $err->getMessage();
@@ -122,7 +124,11 @@
             }
             return $this->render("error/403");
         }
-
+        public function exit(){
+            unset($_SESSION["user"]);
+            return $this->redirect('/user/login');
+        }
+       
 
     }
 
