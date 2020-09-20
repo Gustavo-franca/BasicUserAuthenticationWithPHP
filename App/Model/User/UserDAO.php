@@ -39,7 +39,10 @@
                   );
 
                 $where = "id = :id";
-              return parent::update($this->table,$columns,$values,$where);
+               if(parent::update($this->table,$columns,$values,$where)){
+                    return $this->findOneById($user->id);
+                };
+                return false;
           } 
         
         public function findOneByEmail($email){
